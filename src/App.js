@@ -7,11 +7,26 @@ class App extends Component {
     this.remoteVideoref = React.createRef();
   }
   componentDidMount() {
-    this.pc = new RTCPeerConnection(null);
+    const pc_config = null;
+    this.pc = new RTCPeerConnection(pc_config);
+
+    this.pc.onicecandidate = (e) => {
+      if (e.candidate) console.log(JSON.stringify(e.candidate));
+    };
+
+    this.pc.onconnectionstatechange = (e) => {
+      console.log(e);
+    };
+
+    this.pc.onaddstream = (e) => {
+      this.remoteVideoref.current.srcObject = e.stream;
+    };
     const constraints = { video: true };
     //if media success
     const success = (stream) => {
+      window.localStream = stream;
       this.localVideoRef.current.srcObject = stream;
+      this.pc.addStream(stream);
     };
     //if media failed
     const failure = (e) => {
@@ -23,6 +38,16 @@ class App extends Component {
       .then(success)
       .catch(failure);
   }
+  createOffer = () => {
+    console.log("OFFER");
+    this.pc.createOffer({ offerToReceiveVideo: 1 }).then(
+      (sdp) => {
+        console.log(JSON.stringify(sdp));
+        this.pc.setLocalDescription(sdp);
+      },
+      (e) => {}
+    );
+  };
   render() {
     return (
       <div>
