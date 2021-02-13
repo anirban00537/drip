@@ -35,7 +35,7 @@ class App extends Component {
       },
     };
 
-    // DONT FORGET TO CHANGE TO YOUR URL
+    // DONT FORGET TO CHANGE TO YOUR URL//
 
     this.serviceIP = "http://localhost:8080/webrtcPeer";
 
