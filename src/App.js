@@ -37,7 +37,7 @@ class App extends Component {
 
     // DONT FORGET TO CHANGE TO YOUR URL
 
-    this.serviceIP = "https://1f5fe2391df8.ngrok.io/webrtcPeer";
+    this.serviceIP = "https://dripconference.herokuapp.com/webrtcPeer";
 
     // https://reactjs.org/docs/refs-and-the-dom.html
     // this.localVideoref = React.createRef()
